@@ -36,15 +36,15 @@ fi
 # Espelho de rede para baixar o pacote
 REPO="http://repositorio.nti.ufal.br/mint"
 
-# Busca versões dos pacotes DEB do MINTSTICK e armazena ordenando da versão mais nova até a mais antiga
-VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9]+\.[0-9]+\.[0-9]+(?=_all\.deb)" | sort -ur))
+# Busca versões dos pacotes DEB do MINTSTICK e armazena ordenando da versão mais velha até a mais nova
+VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9]+\.[0-9]+\.[0-9]+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n))
 
 # Opção para escolha da versão
 #i=0
 #printf "Escolha a versão do MINTSTICK:\n\n"
 #for versao in "${VER[@]}"
 #do
-#	if [ $i -eq 0 ]
+#	if [ $i -eq $((${#VER[@]}-1)) ]
 #	then
 #		printf "(%2d) - " $i
 #	else
@@ -53,11 +53,11 @@ VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9
 #	printf "%s\n" $versao
 #	((i=i+1))
 #done
-#read verNum
+#read -i $((${#VER[@]}-1)) -e verNum
 #ARQ="mintstick_${VER[$verNum]}_all.deb"
 
 # Baixa a versão mais nova do MINTSTICK
-ARQ="mintstick_${VER[0]}_all.deb"
+ARQ="mintstick_${VER[-1]}_all.deb"
 quadro "Baixando arquivo de instalação \"$ARQ\""
 wget "${REPO}/pool/main/m/mintstick/${ARQ}"
 
