@@ -64,7 +64,7 @@ wget "${REPO}/pool/main/m/mintstick/${ARQ}"
 # Instala o MINTSTICK
 quadro "Instalando \"$ARQ\""
 sudo dpkg -i $ARQ
-sudo apt install -f
+sudo apt install -f -y
 #sudo dpkg -i $ARQ
 
 # Remove pacote de instalação
