@@ -41,7 +41,7 @@ VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9
 
 # Opção para escolha da versão
 #i=0
-#printf "Escolha a versão do MINTSTICK:\n\n"
+#default=$((${#VER[@]}-1)) #Última versão
 #for versao in "${VER[@]}"
 #do
 #	if [ $i -eq $((${#VER[@]}-1)) ]
@@ -53,7 +53,9 @@ VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9
 #	printf "%s\n" $versao
 #	((i=i+1))
 #done
-#read -i $((${#VER[@]}-1)) -e verNum
+#echo ""
+#read -p "Entre com o índice para versão que deseja instalar [$default]: " verNum
+#verNum=${verNum:-$((${#VER[@]}-1))}
 #ARQ="mintstick_${VER[$verNum]}_all.deb"
 
 # Baixa a versão mais nova do MINTSTICK
