@@ -37,7 +37,7 @@ fi
 REPO="http://repositorio.nti.ufal.br/mint"
 
 # Busca versões dos pacotes DEB do MINTSTICK e armazena ordenando da versão mais velha até a mais nova
-VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)[0-9]+\.[0-9]+\.[0-9]+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n))
+VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n))
 
 # Opção para escolha da versão
 #i=0
