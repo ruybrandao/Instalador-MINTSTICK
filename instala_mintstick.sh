@@ -58,7 +58,7 @@ VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\
 #ARQ="mintstick_${VER[$verNum]}_all.deb"
 
 # Baixa a versão mais nova do MINTSTICK
-ARQ="mintstick_${VER[-1]}_all.deb"
+ARQ="mintstick_${VER[0]}_all.deb"
 quadro "Baixando arquivo de instalação \"$ARQ\""
 wget "${REPO}/pool/main/m/mintstick/${ARQ}"
 
