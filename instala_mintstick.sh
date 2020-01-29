@@ -44,26 +44,29 @@ REPO="http://repositorio.nti.ufal.br/mint"
 # Busca versões dos pacotes DEB do MINTSTICK e armazena ordenando da versão mais nova até a mais velha
 VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n | tac))
 
-# Opção para escolha da versão
-#i=0
-#for versao in "${VER[@]}"
-#do
-#	if [ $i -eq 0 ]
-#	then
-#		printf "(%2d) - " $i
-#	else
-#		printf "%3d  - " $i
-#	fi
-#	printf "%s\n" $versao
-#	((i=i+1))
-#done
-#echo ""
-#read -p "Entre com o índice para versão que deseja instalar [0]: " verNum
-#verNum=${verNum:-0}
-#ARQ="mintstick_${VER[$verNum]}_all.deb"
+if [ "$1" == "-l" ]; then
+	# Opção para escolha da versão
+	i=0
+	for versao in "${VER[@]}"
+	do
+		if [ $i -eq 0 ]
+		then
+			printf "(%2d) - " $i
+		else
+			printf "%3d  - " $i
+		fi
+		printf "%s\n" $versao
+		((i=i+1))
+	done
+	echo ""
+	read -p "Entre com o índice para versão que deseja instalar [0]: " verNum
+	verNum=${verNum:-0}
+	ARQ="mintstick_${VER[$verNum]}_all.deb"
+else
+	ARQ="mintstick_${VER[0]}_all.deb"
+fi
 
-# Baixa a versão mais nova do MINTSTICK
-ARQ="mintstick_${VER[0]}_all.deb"
+# Baixa o MINTSTICK
 quadro "Baixando arquivo de instalação \"$ARQ\""
 wget "${REPO}/pool/main/m/mintstick/${ARQ}"
 
