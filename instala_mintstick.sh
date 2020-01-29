@@ -26,11 +26,16 @@ fi
 
 # Instala o cURL caso ele não esteja instalado
 dpkg -l curl | grep '^ii' > /dev/null
-#echo $?
-#exit
 if [ $? -ne 0 ]; then
 	quadro "Instalando cURL"
 	sudo apt install curl -y
+fi
+
+# Instala o Wget caso ele não esteja instalado
+dpkg -l wget | grep '^ii' > /dev/null
+if [ $? -ne 0 ]; then
+	quadro "Instalando Wget"
+	sudo apt install wget -y
 fi
 
 # Espelho de rede para baixar o pacote
