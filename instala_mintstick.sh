@@ -8,12 +8,12 @@ quadro () {
 	do
 		printf "-"
 	done
-	printf "+\n| $1 |\n"
+	printf "+\n| $1 |\n+"
 	for ((i=0 ; i<tam; i++ ))
 	do
 		printf "-"
 	done
-	printf "\n\n"
+	printf "+\n\n"
 }
 
 quadro "Instalação automatizada do MINTSTICK"
