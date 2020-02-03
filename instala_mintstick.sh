@@ -2,16 +2,16 @@
 
 quadro () {
 	tam=$(expr length "$1")
-	((tam+=4))
-	printf "\n"
+	((tam+=2))
+	printf "\n+"
 	for ((i=0 ; i<tam; i++ ))
 	do
-		printf "*"
+		printf "-"
 	done
-	printf "\n* $1 *\n"
+	printf "+\n| $1 |\n"
 	for ((i=0 ; i<tam; i++ ))
 	do
-		printf "*"
+		printf "-"
 	done
 	printf "\n\n"
 }
