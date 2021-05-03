@@ -16,7 +16,7 @@ quadro () {
 	printf "+\n\n"
 }
 
-quadro "Instalação automatizada do MINTSTICK"
+quadro "Instalação automatizada do MintStick"
 
 sudo apt update
 if [ $? -ne 0 ]; then
@@ -41,8 +41,14 @@ fi
 # Espelho de rede para baixar o pacote
 REPO="http://repositorio.nti.ufal.br/mint"
 
-# Busca versões dos pacotes DEB do MINTSTICK e armazena ordenando da versão mais nova até a mais velha
+# Busca versões dos pacotes DEB do MintStick e armazena ordenando da versão mais nova até a mais velha
 VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n | tac))
+
+# Busca pacotes DEB de traduções do Mint
+VER_TRAD=($(curl -sl "${REPO}/pool/main/m/mint-translations/" | grep -Po "(?<=mint-translations_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n | tac))
+
+# Nome do arquivo do pacote de traduções mais recente
+ARQ_TRAD="mint-translations_${VER_TRAD[0]}_all.deb"
 
 if [ "$1" == "-l" ]; then
 	# Opção para escolha da versão
@@ -66,16 +72,24 @@ else
 	ARQ="mintstick_${VER[0]}_all.deb"
 fi
 
-# Baixa o MINTSTICK
-quadro "Baixando arquivo de instalação \"$ARQ\""
-wget "${REPO}/pool/main/m/mintstick/${ARQ}"
-
-# Instala o MINTSTICK
-quadro "Instalando \"$ARQ\""
-sudo dpkg -i $ARQ
+# Instala pacote de traduções
+quadro "Instalando pacote de traduções"
+sudo dpkg -i ${ARQ_TRAD}
 sudo apt install -f -y
-#sudo dpkg -i $ARQ
+
+
+# Baixa o MintStick
+quadro "Baixando pacote de instalação e traduções"
+wget "${REPO}/pool/main/m/mintstick/${ARQ}"
+wget "${REPO}/pool/main/m/mint-translations/${ARQ_TRAD}"
+
+# Instala o MintStick
+quadro "Instalando MintStick e traduções"
+sudo dpkg -i ${ARQ} ${ARQ_TRAD}
+sudo apt install -f -y
 
 # Remove pacote de instalação
-quadro "Removendo pacote de instalação \"$ARQ\""
-rm $ARQ
+quadro "Removendo pacotes de instalação"
+rm ${ARQ} ${ARQ_TRAD}
+
+quadro "MintStick instalado"
