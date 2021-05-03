@@ -1,0 +1,1 @@
+- [ ] Adicionar tradução (pool/main/m/mint-translations)
