@@ -39,7 +39,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Espelho de rede para baixar o pacote
-REPO="http://repositorio.nti.ufal.br/mint"
+REPO="http://packages.linuxmint.com"
 
 # Busca versões dos pacotes DEB do MintStick e armazena ordenando da versão mais nova até a mais velha
 VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n | tac))
