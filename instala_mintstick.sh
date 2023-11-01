@@ -47,9 +47,6 @@ VER=($(curl -sl "${REPO}/pool/main/m/mintstick/" | grep -Po "(?<=mintstick_)\d+\
 # Busca pacotes DEB de traduções do Mint
 VER_TRAD=($(curl -sl "${REPO}/pool/main/m/mint-translations/" | grep -Po "(?<=mint-translations_)\d+\.\d+\.\d+(?=_all\.deb)" | sort -ut. -k 1,1n -k2,2n -k3,3n | tac))
 
-# Nome do arquivo do pacote de traduções mais recente
-ARQ_TRAD="mint-translations_${VER_TRAD[0]}_all.deb"
-
 if [ "$1" == "-l" ]; then
 	# Opção para escolha da versão
 	i=0
@@ -68,15 +65,12 @@ if [ "$1" == "-l" ]; then
 	read -p "Entre com o índice para versão que deseja instalar [0]: " verNum
 	verNum=${verNum:-0}
 	ARQ="mintstick_${VER[$verNum]}_all.deb"
+	ARQ="mint-translations${VER[$verNum]}_all.deb"
 else
+	# Última versão
 	ARQ="mintstick_${VER[0]}_all.deb"
+	ARQ="mint-translations${VER[0]}_all.deb"
 fi
-
-# Instala pacote de traduções
-quadro "Instalando pacote de traduções"
-sudo dpkg -i ${ARQ_TRAD}
-sudo apt install -f -y
-
 
 # Baixa o MintStick
 quadro "Baixando pacote de instalação e traduções"
